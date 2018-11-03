@@ -1,5 +1,7 @@
 package list
 
+import errors.{None, Option, Some, Try}
+
 sealed trait List[+A]
 case object Nil extends List[Nothing]
 case class Cons[+A](head: A, tail: List[A]) extends List[A]
@@ -189,4 +191,13 @@ object List {
       checkSequences(false,sup)
 
   }
+
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =  Some(foldRight(a, Nil:List[A])((x,y) => x match {
+    case Some(g) => Cons(g, y)
+    case None => y
+    }))
+
+
+
+
 }

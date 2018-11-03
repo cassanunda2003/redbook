@@ -49,6 +49,8 @@ class OptionTest extends FreeSpec with Matchers {
       val opt: Option[Int] = Some(4)
       opt.filter((x) => x > 3) should be (Some(4))
     }
+
+
   }
 
 }

@@ -10,4 +10,8 @@ object Try {
       case(_,None) => None
       case(Some(x),Some(y)) => Some(f(x,y))
   }
+
+  def map2book[A,B,C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] =
+    a flatMap (aa => b map (bb => f(aa, bb)))
+
 }

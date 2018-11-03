@@ -20,6 +20,14 @@ class TryTest extends FreeSpec with Matchers {
     "map2 should return Some(3)" in {
       Try.map2(Some(1),Some(2))((a,b) => a+b) should be (Some(3))
     }
+
+    "map2book should return None" in {
+      Try.map2book(Some(1), None)((a,b) => a+b) should be (None)
+    }
+
+    "map2book should return Some(3)" in {
+      Try.map2book(Some(1),Some(2))((a,b) => a+b) should be (Some(3))
+    }
   }
 
 }

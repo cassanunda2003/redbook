@@ -1,5 +1,9 @@
 package list
 
+import errors.Option
+import errors.Some
+import errors.None
+
 import org.scalatest.{FreeSpec, Matchers}
 
 class ListSpec extends FreeSpec with Matchers {
@@ -157,6 +161,15 @@ class ListSpec extends FreeSpec with Matchers {
     }
     "Has subsequence false" in {
       List.hasSubsequence(List(9,9,9,9,9), List(7)) should be (false)
+    }
+
+    "Sequence should return list of 1,2,3" in {
+
+        List.sequence(List(Some(1),Some(2),Some(3))) should be (Some(List(1,2,3)))
+    }
+    "Sequence should return list of 1,3" in {
+
+        List.sequence(List(Some(1),None,Some(3))) should be (Some(List(1,3)))
     }
   }
 
