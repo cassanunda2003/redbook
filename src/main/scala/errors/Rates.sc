@@ -7,7 +7,7 @@ val a = "112".toInt
 def parseInsuranceRateQuote(age: String, numberOfSpeedingTickers: String): Option[Double] = {
   val optAge: Option[Int] = Try.Try(age.toInt)
   val optTickets: Option[Int] = Try.Try(numberOfSpeedingTickers.toInt)
-  Try.map2[Int,Int,Double](optAge,optTickets)(insuranceRateQuote)
+  Try.map2bookFor(optAge,optTickets)(insuranceRateQuote)
 }
 
 def insuranceRateQuote(age: Int, numberOfSpeedingTickets: Int): Double = {

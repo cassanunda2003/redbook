@@ -1,6 +1,5 @@
 package errors
 
-import errors.Try
 import org.scalatest.{FreeSpec, Matchers}
 
 class TryTest extends FreeSpec with Matchers {
@@ -28,6 +27,15 @@ class TryTest extends FreeSpec with Matchers {
     "map2book should return Some(3)" in {
       Try.map2book(Some(1),Some(2))((a,b) => a+b) should be (Some(3))
     }
+    "map2bookfor should return None" in {
+      Try.map2bookFor(Some(1), None)((a,b) => a+b) should be (None)
+    }
+
+    "map2bookfor should return Some(3)" in {
+      Try.map2bookFor(Some(1),Some(2))((a,b) => a+b) should be (Some(3))
+    }
+
+
   }
 
 }
