@@ -171,6 +171,14 @@ class ListSpec extends FreeSpec with Matchers {
 
         List.sequence(List(Some(1),None,Some(3))) should be (Some(List(1,3)))
     }
+
+    "meanEither should return error for empty list" in {
+      List.meanEither(Seq[Double]()) should be (Left("Error"))
+    }
+
+    "meanEither should return 2 " in {
+      List.meanEither(Seq(1,2.0,3)) should be (Right(2.0))
+    }
   }
 
 }

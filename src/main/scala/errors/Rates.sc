@@ -15,4 +15,19 @@ def insuranceRateQuote(age: Int, numberOfSpeedingTickets: Int): Double = {
   (age * numberOfSpeedingTickets) + 1000.0
 }
 
+//def insuranceRateQuoteEither(age: Int, numberOfSpeedingTickets: Int): Either[Exception,Double] = {
+//  println("Age"+age+"number"+numberOfSpeedingTickets)
+//  Right((age * numberOfSpeedingTickets) + 1000.0)
+//}
+//
 val quote = parseInsuranceRateQuote("30","3")
+//
+//def parseInsuranceRateQuoteEither(
+//                             age: String,
+//                             numberOfSpeedingTickets: String): Either[Exception,Double] =
+//  for {
+//    a <- Either{ age.toInt }
+//    tickets <- Either.Try { numberOfSpeedingTickets.toInt }
+//  } yield insuranceRateQuoteEither(a, tickets)
+//
+//val quote2 = parseInsuranceRateQuoteEither("45","7")

@@ -197,7 +197,7 @@ object List {
     case None => y
     }))
 
-
+  def meanEither[Int](xs: Seq[Double]): Either[String, Double] = if (xs.isEmpty) Left("Error") else Right(xs.sum/xs.size)
 
 
 }
