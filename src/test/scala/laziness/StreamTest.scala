@@ -75,6 +75,12 @@ class StreamTest extends FreeSpec with Matchers {
     "constant" in {
       st.constant(1).take(5).toList should be (List(1,1,1,1,1))
     }
+    "from" in {
+      st.from(3).take(5).toList should be (List(3,4,5,6,7))
+    }
+    "fib" in {
+      st.fibs.take(7).toList should be (List(0, 1, 1, 2, 3, 5, 8))
+    }
   }
 
 }

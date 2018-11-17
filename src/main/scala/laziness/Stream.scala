@@ -3,6 +3,8 @@ package laziness
 import Stream._
 
 sealed trait Stream[+A] {
+
+  val i1 = 1 + 1
   def headOption: Option[A] = this match {
     case Empty => None
     case Cons(h, t) => Some(h())
@@ -100,6 +102,25 @@ sealed trait Stream[+A] {
   def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Empty: Stream[B])((a,b) =>f(a) append b)
 
   def constant[A](a: A): Stream[A] = cons(a,constant(a))
+
+  def from(i: Int): Stream[Int] = cons(i,from(i+1))
+
+  //Book solutions
+
+  // This is more efficient than `cons(a, constant(a))` since it's just
+  // one object referencing itself.
+  def constantBook[A](a: A): Stream[A] = {
+    lazy val tail: Stream[A] = Cons(() => a, () => tail)
+    tail
+  }
+
+  def fromBook(n: Int): Stream[Int] =
+    cons(n, from(n+1))
+
+  def fibs: Stream[Int] = {
+    def fib(a: Int,b: Int): Stream[Int] = cons(a,fib(b,a+b))
+    fib(0,1)
+  }
 }
 
 case object Empty extends Stream[Nothing]
