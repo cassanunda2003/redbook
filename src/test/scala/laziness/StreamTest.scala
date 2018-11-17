@@ -71,6 +71,10 @@ class StreamTest extends FreeSpec with Matchers {
     "flatMap" in {
       st.flatMap(i => Stream(i,i)).toList should be (List(1,1,2,2,3,3,4,4))
     }
+
+    "constant" in {
+      st.constant(1).take(5).toList should be (List(1,1,1,1,1))
+    }
   }
 
 }
