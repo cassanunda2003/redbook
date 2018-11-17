@@ -53,24 +53,64 @@ sealed trait Stream[+A] {
   }
 
   //Recursive had trouble as to why I would meed the import statement but it is necessary to include the methods
-  //in the object
+  //in the object cons and empty
   def take(n: Int): Stream[A] = this match {
     case Cons(h, t) if n > 1 => cons(h(), t().take(n - 1))
     case Cons(h, _) if n == 1 => cons(h(), empty)
     case _ => empty
   }
 
+  def takeWhile(f: A => Boolean):Stream[A] = this match {
+    case Cons(h,t) if(f(h())) => cons(h(), t() takeWhile(f))
+    case _ => Empty
+  }
+
+  def takeWhileRight(f: A => Boolean):Stream[A] = foldRight(Empty: Stream[A])((a, b) => if(f(a)) cons(a, b) else empty)
+
+  def existsRec(p: A => Boolean): Boolean = this match {
+    case Cons(h, t) => p(h()) || t().exists(p)
+    case _ => false
+  }
+
+  //book exists
+  // Here `b` is the unevaluated recursive step that folds the tail of the stream. If `p(a)` returns `true`, `b` will never be evaluated and the computation terminates early.
+  def exists(p: A => Boolean): Boolean =
+    foldRight(false)((a, b) => p(a) || b)
+
+  def foldRight[B](z: => B)(f: (A, => B) => B): B =
+      this match {
+         case Cons(h,t) => f(h(), t().foldRight(z)(f))
+          case _ => z
+    }
+
+
+
+  def forAll(p: A => Boolean): Boolean = foldRight(true)((a, b) => p(a) && b)
+
+  def headOptionRight(): Option[A] = foldRight(None: Option[A])(
+    (a, _) => Some(a)
+  )
+
+  def map[B](f: A => B): Stream[B] = foldRight(Empty: Stream[B])((a, b) => cons(f(a), b))
+
+  def filter(f: A => Boolean): Stream[A] = foldRight(Empty: Stream[A])((a, b) => if(f(a)) cons(a,b) else b)
+
+  def append[B>:A](s1: Stream[B]): Stream[B] = foldRight(s1)((x,b) => cons(x,b))
+
+  def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Empty: Stream[B])((a,b) =>f(a) append b)
 }
 
 case object Empty extends Stream[Nothing]
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
 object Stream  {
+
   def cons[A](hd: => A, tl: => Stream[A]): Stream[A] = {
     lazy val head = hd
     lazy val tail = tl
     Cons(()=>head, () => tail)
   }
+
   def empty[A]: Stream[A] = Empty
 
   def apply[A](as: A*): Stream[A] =
