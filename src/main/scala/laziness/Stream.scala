@@ -145,6 +145,34 @@ sealed trait Stream[+A] {
   def constantUnfold[A](a: A): Stream[A] = unFold(a) {case x => Some(x, x)}
 
   def onesUnfold: Stream[Int] = unFold(1) {(x) => Some((x, x))}
+
+  //I tried to use the pattern above but of course we are not generating
+  //but using the values in the stream
+  def mapUnfold[B](f: A => B): Stream[B] = unFold(this) {
+    case Cons(h, t) => Some(f(h()), t())
+    case _ => None
+  }
+
+  def takeWhileUnfold(f: A => Boolean): Stream[A] = unFold(this) {
+    case Cons(h, t) if(f(h())) => Some(h(),t())
+    case _ => None
+  }
+
+  //I couldn't get the tuples to work
+//  def takeUnfold(n: Int): Stream[A] = unFold((n, this)) {
+//    case (n, Cons(h,t)) if(n > 0) => (n, Some(h(), t()))
+//  }
+
+  //what is the Some((h(), (t(), n-1))) syntax
+  //So h() is not part of the tuple passed
+ //as the active line is     case Some((a, b)) => cons(a, unFold(b)(f))
+  //so h() is a and (t(), n - 1) goes to the unfold
+  def takeViaUnfold(n: Int): Stream[A] =
+    unFold((this,n)) {
+      case (Cons(h,t), 1) => Some((h(), (empty, 0)))
+      case (Cons(h,t), n) if n > 1 => Some((h(), (t(), n-1)))
+      case _ => None
+    }
 }
 
 case object Empty extends Stream[Nothing]

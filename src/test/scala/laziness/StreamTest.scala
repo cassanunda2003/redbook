@@ -93,6 +93,18 @@ class StreamTest extends FreeSpec with Matchers {
     "onesUnfold" in {
       st.onesUnfold.take(5).toList should be(List(1, 1, 1, 1, 1))
     }
+
+    "mapUnfold" in {
+      st.mapUnfold(x => x + 1).toList should be (List(2,3,4,5))
+    }
+
+    "takeWhile unfold" in {
+      st.takeWhileUnfold((x) => x < 3).toList should be (List(1,2))
+    }
+
+    "take unfold" in {
+      st.takeViaUnfold(2).toList should be(List(1,2))
+    }
   }
 
 }
