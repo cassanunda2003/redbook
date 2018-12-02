@@ -173,6 +173,12 @@ sealed trait Stream[+A] {
       case (Cons(h,t), n) if n > 1 => Some((h(), (t(), n-1)))
       case _ => None
     }
+
+  //I tried zipWithUnfold[A,B] but this failed but I am unclear why I need a C here
+  def zipWithUnfold[B, C](st: Stream[B])(g: (A, B) => C): Stream[C] = unFold((this, st)) {
+    case (Cons(h, t), Cons(x, y)) => Some(g(h(), x()),(t(), y()))
+    case _ => None
+  }
 }
 
 case object Empty extends Stream[Nothing]

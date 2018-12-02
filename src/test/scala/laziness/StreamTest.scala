@@ -105,6 +105,10 @@ class StreamTest extends FreeSpec with Matchers {
     "take unfold" in {
       st.takeViaUnfold(2).toList should be(List(1,2))
     }
+
+    "zip with unfold" in {
+      st.zipWithUnfold(Stream(1,2,3,4))((a, b) => a + b).toList should be (List(2,4,6,8))
+    }
   }
 
 }
