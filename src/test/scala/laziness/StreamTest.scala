@@ -1,8 +1,10 @@
 package laziness
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class StreamTest extends FreeSpec with Matchers {
+
+class StreamTest extends AnyFreeSpec with Matchers {
   "Stream" - {
     val st: Stream[Int] = Stream(1, 2, 3, 4)
     "Should give a list when using to list" in {

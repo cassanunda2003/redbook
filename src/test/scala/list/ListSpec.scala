@@ -4,9 +4,10 @@ import errors.Option
 import errors.Some
 import errors.None
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class ListSpec extends FreeSpec with Matchers {
+class ListSpec extends AnyFreeSpec with Matchers {
 
   "A List" - {
     "should sum a list of ints " in {

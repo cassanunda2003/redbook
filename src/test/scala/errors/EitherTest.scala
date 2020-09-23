@@ -1,8 +1,10 @@
 package errors
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class EitherTest extends FreeSpec with Matchers {
+
+class EitherTest extends AnyFreeSpec with Matchers {
   val e = new Exception("Error")
   "Either" - {
     "map should return either 2" in {

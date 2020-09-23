@@ -1,8 +1,10 @@
 package errors
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class OptionTest extends FreeSpec with Matchers {
+
+class OptionTest extends AnyFreeSpec with Matchers {
 
   "An Option" - {
     "should map and increment an int" in {

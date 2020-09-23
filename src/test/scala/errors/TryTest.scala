@@ -1,8 +1,10 @@
 package errors
 
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
-class TryTest extends FreeSpec with Matchers {
+
+class TryTest extends AnyFreeSpec with Matchers {
   "Try" - {
     "should use try to provide None of fail" in {
 

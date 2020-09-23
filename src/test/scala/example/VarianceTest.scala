@@ -1,7 +1,10 @@
 package example
 
-import org.scalatest.{FreeSpec, Matchers}
-class VarianceTest extends FreeSpec with Matchers {
+
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
+
+class VarianceTest extends AnyFreeSpec with Matchers {
 
   "Variance" - {
     "mean method should return the arithmetic mean of a list" in {
