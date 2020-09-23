@@ -1,12 +1,8 @@
 package state
 
-import java.awt.RadialGradientPaint
-
-
-
 trait RNG {
+  type Rand[+A] = RNG => (A, RNG)
 
-      type Rand[+A] = RNG => (A, RNG)
   def nextInt: (Int, RNG)
   def nonNegativeInt(rng: RNG): ( Int, RNG)
 }
@@ -89,7 +85,6 @@ class SimpleRNG(seed: Long) extends RNG {
       }
     }
 
-
     def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = {
         rng => {
           val (a, rng2) = ra(rng)
@@ -124,7 +119,11 @@ class SimpleRNG(seed: Long) extends RNG {
     both(double, int)
 
 
-
+    def nonNegativeLessThan(n: Int): Rand[Int] =    
+     flatMap(nonNegativeInt) { i =>
+      val mod = i % n
+      if (i + (n-1) - mod >= 0) unit(mod) else nonNegativeLessThan(n)
+    }
 }
 
 object SimpleRNG {

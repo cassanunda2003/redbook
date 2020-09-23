@@ -55,3 +55,12 @@ rng.doubleElegant2(rng)
 rng.randIntDouble(rng)
 
 rng.randIntDouble2(rng)
+
+val n6 = rng.nonNegativeLessThan(6)
+
+val (n, rngnon6a) = n6(rng)
+
+n6(rngnon6a)
+
+
+
